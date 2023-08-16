@@ -1,0 +1,18 @@
+api.security.token.secret: ${JWT_SECRET:my-secret-key}
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:desafioUserCarDB
+    username: sa
+    password: 
+    diverClassName: org.h2.Driver
+  jpa:
+    spring:jpa:database:platform: org.spring.dialect.H2Dialect
+  h2:
+    console.enabled: true 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  web:
+    locale: pt_BR
+  
