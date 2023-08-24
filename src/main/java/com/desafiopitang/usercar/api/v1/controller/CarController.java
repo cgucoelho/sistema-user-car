@@ -33,7 +33,7 @@ public class CarController {
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
-	@PostMapping
+	@PostMapping( produces="application/json")
 	public ResponseEntity<Object> newCar(@RequestBody CarDTO dto, HttpServletRequest requisicao){
 		if(carServiceImpl.existsByLicensePlate(dto.getLicensePlate())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("License plate already exists");
@@ -47,7 +47,7 @@ public class CarController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(carServiceImpl.save(car));		
 	}
 	
-	@GetMapping
+	@GetMapping( produces="application/json")
 	public ResponseEntity<List<Car>> listAllCars(){
 		
 		return ResponseEntity.status(HttpStatus.OK).body(carServiceImpl.findCars());

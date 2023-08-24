@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
-	@PostMapping
+	@PostMapping(produces="application/json")
 	public ResponseEntity<Object> newUser(@RequestBody UserDTO dto){
 		if(userServiceImpl.existsByLogin(dto.getLogin())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Login already exists");
@@ -42,14 +42,14 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userServiceImpl.save(user));		
 	}
 	
-	@GetMapping
+	@GetMapping(produces="application/json")
 	public ResponseEntity<List<User>> listAllUsers(){
 		
 		return ResponseEntity.status(HttpStatus.OK).body(userServiceImpl.findUsers());
 		
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<Object> findUser(Long id){
+	public ResponseEntity<Object> findUser(@PathVariable Long id){
 		Optional<User> user = userServiceImpl.findUserByID(id);
 		if(!user.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
