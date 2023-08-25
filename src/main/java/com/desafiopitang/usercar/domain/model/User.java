@@ -18,6 +18,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,9 +46,14 @@ public class User implements UserDetails{
 	private String login;
 	private String password;
 	private String phone;
-	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL )
 	private List<Car> cars = new ArrayList<>(); 
 	
+	public void addCar(Car car) {
+	       getCars().add(car);
+	       car.setUser(this);
+	    }
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -40,9 +40,8 @@ public class CarController {
 		}
 		var usr = userServiceImpl.loadUserByUsername(requisicao.getRemoteUser());
 		var car = new Car();
-		car.setUser((User) usr);
-		
 		BeanUtils.copyProperties(dto, car);
+		car.setUser((User) usr);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(carServiceImpl.save(car));		
 	}

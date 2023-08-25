@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafiopitang.usercar.domain.dto.UserDTO;
+import com.desafiopitang.usercar.domain.model.Car;
 import com.desafiopitang.usercar.domain.model.User;
 import com.desafiopitang.usercar.domain.service.impl.UserServiceImpl;
 
@@ -36,9 +37,22 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
 		}
 		var user = new User();
-		BeanUtils.copyProperties(dto, user);
+		user.setFirstName(dto.getFirstName());
+		user.setLastName(dto.getLastName());
+		user.setEmail(dto.getEmail());
+		user.setLogin(dto.getLogin());
+		user.setPhone(dto.getPhone());
+		user.setBirthday(dto.getBirthday());
 		String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getPassword());
-		user.setPassword(encryptedPassword);		
+		user.setPassword(encryptedPassword);	
+		for (int i = 0; i < dto.getCars().size(); i++) {
+			var car = new Car();
+			car.setColor(dto.getCars().get(i).getColor());
+			car.setLicensePlate(dto.getCars().get(i).getLicensePlate());
+			car.setModel(dto.getCars().get(i).getModel());
+			car.setYearManufature(dto.getCars().get(i).getYearManufature());
+			user.addCar(car);			
+		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(userServiceImpl.save(user));		
 	}
 	
@@ -58,7 +72,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> updateCar(@PathVariable Long id, @RequestBody UserDTO dto){
+	public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody UserDTO dto){
 		Optional<User> user = userServiceImpl.findUserByID(id);
 		if(!user.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
@@ -69,7 +83,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> deleteCar(@PathVariable Long id){
+	public ResponseEntity<Object> deleteUser(@PathVariable Long id){
 		Optional<User> user = userServiceImpl.findUserByID(id);
 		if(!user.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");

@@ -1,6 +1,8 @@
 package com.desafiopitang.usercar.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,9 +31,9 @@ public class Car {
 	private String licensePlate;
 	private String model;
 	private String color;
-	
-	@ManyToOne()
-	@JoinColumn(name = "car_id")
+		
+	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)
+	@JoinColumn(name = "id_user")
 	private User user;
 	
 
