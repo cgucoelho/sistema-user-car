@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -23,13 +25,18 @@ import lombok.NoArgsConstructor;
 @Table(name= "carro")
 public class Car {
 	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message = "Campo obrigatório")
 	private int yearManufature;
+	@NotNull(message = "Campo obrigatório")
 	private String licensePlate;
+	@NotNull(message = "Campo obrigatório")
 	private String model;
+	@NotNull(message = "Campo obrigatório")
 	private String color;
 		
 	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.ALL)

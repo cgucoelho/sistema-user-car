@@ -3,6 +3,8 @@ package com.desafiopitang.usercar.api.v1.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,7 @@ public class UserController {
 	private UserServiceImpl userServiceImpl;
 	
 	@PostMapping(produces="application/json")
-	public ResponseEntity<Object> newUser(@RequestBody UserDTO dto){
+	public ResponseEntity<Object> newUser(@Valid @RequestBody UserDTO dto){
 		if(userServiceImpl.existsByLogin(dto.getLogin())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Login already exists");
 		}else if(userServiceImpl.existsByEmail(dto.getEmail())) {

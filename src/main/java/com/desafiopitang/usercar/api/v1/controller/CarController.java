@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class CarController {
 	private UserServiceImpl userServiceImpl;
 	
 	@PostMapping( produces="application/json")
-	public ResponseEntity<Object> newCar(@RequestBody CarDTO dto, HttpServletRequest requisicao){
+	public ResponseEntity<Object> newCar(@Valid @RequestBody CarDTO dto, HttpServletRequest requisicao){
 		if(carServiceImpl.existsByLicensePlate(dto.getLicensePlate())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("License plate already exists");
 		}

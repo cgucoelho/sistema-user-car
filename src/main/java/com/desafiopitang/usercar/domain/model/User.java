@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,12 +42,25 @@ public class User implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String firstName;  
+	@NotNull(message = "Campo obrigatório")
+	@NotBlank
+	private String firstName; 
+	@NotBlank
+	@NotNull(message = "Campo obrigatório")
 	private String lastName;
-	private String email;
+	@NotBlank
+	@Email(message = "Email inválido")
+	private String email;	
+	@NotNull(message = "Campo obrigatório")
 	private Date birthday;
+	@NotNull(message = "Campo obrigatório")
+	@NotBlank
 	private String login;
+	@NotBlank
+	@NotNull(message = "Campo obrigatório")
 	private String password;
+	@NotBlank
+	@NotNull(message = "Campo obrigatório")
 	private String phone;
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL )
