@@ -2,18 +2,16 @@ api.security.token.secret: ${JWT_SECRET:my-secret-key}
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/desafioUserCarDB
-    username: root
-    password: 123456
-    diverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:mem:desafioUserCarDB
+    username: sa
+    password: 
+    diverClassName: org.h2.Driver
   jpa:
-    show-sql: true
-    generate-ddl: true
-    hibernate:ddl-auto: update
-  
+    spring:jpa:database:platform: org.spring.dialect.H2Dialect
+  h2:
+    console.enabled: true 
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
   web:
     locale: pt_BR
-  
