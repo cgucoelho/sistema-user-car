@@ -1,4 +1,4 @@
-package com.desafiopitang.userCar;
+package com.desafiopitang.usercar;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
